@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<h1>Register</h1>
+
+<input type="text">
+<input type="password">
+{{request.user}}
+<a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>
+{% endblock %}

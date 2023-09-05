@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'main',
+
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +50,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = "relation.urls"
@@ -63,6 +67,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
+                # social auth templates
+                'social_django.context_processors.backends',  
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -130,3 +138,21 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = 'register'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'register'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1648652955545510'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'df28728f50375f3863dad1a6e7bed05d'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'public_profile', 'user_friends']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id, name, first_name, last_name, email, picture.type(large), user_friends'
+}
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.11'
